@@ -3,6 +3,7 @@ package button
 import (
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 // Define a message type
@@ -16,6 +17,24 @@ var DefaultKeyMap = KeyMap{
 	Submit: key.NewBinding(key.WithKeys("enter")),
 }
 
+type Style struct {
+	ButtonFocused lipgloss.Style
+	ButtonBlurred lipgloss.Style
+}
+
+var DefaultStyle = Style{
+	ButtonFocused: lipgloss.NewStyle().
+		BorderStyle(lipgloss.RoundedBorder()).
+		BorderForeground(lipgloss.Color("255")).
+		PaddingLeft(1).
+		PaddingRight(1),
+	ButtonBlurred: lipgloss.NewStyle().
+		BorderStyle(lipgloss.RoundedBorder()).
+		BorderForeground(lipgloss.Color("60")).
+		PaddingLeft(1).
+		PaddingRight(1),
+}
+
 type Model struct {
 	// General settings
 	KeyMap KeyMap
@@ -23,6 +42,10 @@ type Model struct {
 
 	// Text settings
 	text string
+
+	// Styling
+	StyleButtonFocused lipgloss.Style
+	StyleButtonBlurred lipgloss.Style
 }
 
 func New() Model {
@@ -31,6 +54,9 @@ func New() Model {
 		focus:  false,
 
 		text: "Button",
+
+		StyleButtonFocused: DefaultStyle.ButtonFocused,
+		StyleButtonBlurred: DefaultStyle.ButtonBlurred,
 	}
 }
 
@@ -55,7 +81,11 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 }
 
 func (m Model) View() string {
-	return m.text
+	if m.focus {
+		return m.StyleButtonFocused.Render(m.text)
+	}
+
+	return m.StyleButtonBlurred.Render(m.text)
 }
 
 // ---
@@ -66,4 +96,8 @@ func (m *Model) Focus() {
 
 func (m *Model) Blur() {
 	m.focus = false
+}
+
+func (m *Model) Toggle() {
+	m.focus = !m.focus
 }
