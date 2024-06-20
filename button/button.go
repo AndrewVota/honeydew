@@ -8,6 +8,13 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
+const (
+	White      = "#FFFFFF"
+	LightGray  = "#D3D3D3"
+	MediumGray = "#A0A0A0"
+	DarkGray   = "#808080"
+)
+
 type MsgSubmit struct{}
 type msgPress struct{}
 
@@ -26,9 +33,9 @@ type Styles struct {
 }
 
 var DefaultStyles Styles = Styles{
-	ButtonFocused: lipgloss.NewStyle().Bold(true).BorderStyle(lipgloss.RoundedBorder()).BorderForeground(lipgloss.Color("255")),
-	ButtonPressed: lipgloss.NewStyle().Bold(true).BorderStyle(lipgloss.RoundedBorder()).BorderForeground(lipgloss.Color("100")),
-	ButtonBlurred: lipgloss.NewStyle().Bold(false).BorderStyle(lipgloss.RoundedBorder()).BorderForeground(lipgloss.Color("200")),
+	ButtonFocused: lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color(White)).BorderStyle(lipgloss.RoundedBorder()).BorderForeground(lipgloss.Color(White)).PaddingLeft(1).PaddingRight(1),
+	ButtonBlurred: lipgloss.NewStyle().Bold(false).Foreground(lipgloss.Color(LightGray)).BorderStyle(lipgloss.RoundedBorder()).BorderForeground(lipgloss.Color(LightGray)).PaddingLeft(1).PaddingRight(1),
+	ButtonPressed: lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color(DarkGray)).BorderStyle(lipgloss.RoundedBorder()).BorderForeground(lipgloss.Color(DarkGray)).PaddingLeft(1).PaddingRight(1),
 }
 
 type Model struct {
