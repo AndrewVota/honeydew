@@ -1,13 +1,15 @@
 package button
 
 import (
+	"time"
+
 	"github.com/charmbracelet/bubbles/key"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
 
-// Define a message type
 type MsgSubmit struct{}
+type msgPress struct{}
 
 type KeyMap struct {
 	Submit key.Binding
@@ -17,46 +19,44 @@ var DefaultKeyMap = KeyMap{
 	Submit: key.NewBinding(key.WithKeys("enter")),
 }
 
-type Style struct {
+type Styles struct {
 	ButtonFocused lipgloss.Style
 	ButtonBlurred lipgloss.Style
+	ButtonPressed lipgloss.Style
 }
 
-var DefaultStyle = Style{
-	ButtonFocused: lipgloss.NewStyle().
-		BorderStyle(lipgloss.RoundedBorder()).
-		BorderForeground(lipgloss.Color("255")).
-		PaddingLeft(1).
-		PaddingRight(1),
-	ButtonBlurred: lipgloss.NewStyle().
-		BorderStyle(lipgloss.RoundedBorder()).
-		BorderForeground(lipgloss.Color("60")).
-		PaddingLeft(1).
-		PaddingRight(1),
+var DefaultStyles Styles = Styles{
+	ButtonFocused: lipgloss.NewStyle().Bold(true).BorderStyle(lipgloss.RoundedBorder()).BorderForeground(lipgloss.Color("255")),
+	ButtonPressed: lipgloss.NewStyle().Bold(true).BorderStyle(lipgloss.RoundedBorder()).BorderForeground(lipgloss.Color("100")),
+	ButtonBlurred: lipgloss.NewStyle().Bold(false).BorderStyle(lipgloss.RoundedBorder()).BorderForeground(lipgloss.Color("200")),
 }
 
 type Model struct {
 	// General settings
-	KeyMap KeyMap
-	focus  bool
+	KeyMap  KeyMap
+	focus   bool
+	pressed bool
 
 	// Text settings
 	text string
 
 	// Styling
-	StyleButtonFocused lipgloss.Style
-	StyleButtonBlurred lipgloss.Style
+	FocusedStyle lipgloss.Style
+	PressedStyle lipgloss.Style
+	BlurredStyle lipgloss.Style
 }
 
 func New() Model {
 	return Model{
-		KeyMap: DefaultKeyMap,
-		focus:  false,
+		KeyMap:  DefaultKeyMap,
+		focus:   false,
+		pressed: false,
 
 		text: "Button",
 
-		StyleButtonFocused: DefaultStyle.ButtonFocused,
-		StyleButtonBlurred: DefaultStyle.ButtonBlurred,
+		FocusedStyle: DefaultStyles.ButtonFocused,
+		PressedStyle: DefaultStyles.ButtonPressed,
+		BlurredStyle: DefaultStyles.ButtonBlurred,
 	}
 }
 
@@ -73,19 +73,30 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	case tea.KeyMsg:
 		switch {
 		case key.Matches(msg, m.KeyMap.Submit):
-			return m, func() tea.Msg { return MsgSubmit{} }
+			m.pressed = true
+			cmd := tea.Tick(time.Millisecond*200, func(t time.Time) tea.Msg {
+				return msgPress{}
+			})
+			return m, tea.Batch(cmd, func() tea.Msg { return MsgSubmit{} })
 		}
+
+	case msgPress:
+		m.pressed = false
 	}
 
 	return m, nil
 }
 
 func (m Model) View() string {
-	if m.focus {
-		return m.StyleButtonFocused.Render(m.text)
+	if m.pressed {
+		return m.PressedStyle.Render(m.text)
 	}
 
-	return m.StyleButtonBlurred.Render(m.text)
+	if m.focus {
+		return m.FocusedStyle.Render(m.text)
+	}
+
+	return m.BlurredStyle.Render(m.text)
 }
 
 // ---
