@@ -109,6 +109,6 @@ func (m *Model) Blur() {
 	m.focus = false
 }
 
-func (m *Model) Toggle() {
+func (m *Model) ToggleFocus() {
 	m.focus = !m.focus
 }
