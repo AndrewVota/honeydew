@@ -15,7 +15,7 @@ const (
 	DarkGray   = "#808080"
 )
 
-type MsgSubmit struct{}
+type MsgSubmit string
 type msgPress struct{}
 
 type KeyMap struct {
@@ -43,6 +43,7 @@ type Model struct {
 	KeyMap  KeyMap
 	focus   bool
 	pressed bool
+	Name    string
 
 	// Text settings
 	text string
@@ -58,6 +59,7 @@ func New() Model {
 		KeyMap:  DefaultKeyMap,
 		focus:   false,
 		pressed: false,
+		Name:    "button",
 
 		text: "Button",
 
@@ -84,7 +86,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			cmd := tea.Tick(time.Millisecond*200, func(t time.Time) tea.Msg {
 				return msgPress{}
 			})
-			return m, tea.Batch(cmd, func() tea.Msg { return MsgSubmit{} })
+			return m, tea.Batch(cmd, func() tea.Msg { return MsgSubmit(m.Name) })
 		}
 
 	case msgPress:
