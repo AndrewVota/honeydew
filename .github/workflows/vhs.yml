@@ -1,0 +1,54 @@
+name: VHS
+
+on:
+  push:
+    paths:
+      - '**/*.tape'
+
+jobs:
+  vhs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          wget https://github.com/tsl0922/ttyd/releases/download/1.7.2/ttyd.x86_64 -O ttyd
+          chmod +x ttyd
+          sudo mv ttyd /usr/local/bin
+
+      - name: Install VHS
+        run: |
+          wget https://github.com/charmbracelet/vhs/releases/download/v0.7.2/vhs_0.7.2_Linux_x86_64.tar.gz
+          tar -xzf vhs_0.7.2_Linux_x86_64.tar.gz
+          sudo mv vhs_0.7.2_Linux_x86_64/vhs /usr/local/bin
+
+      - name: Process button tape
+        run: vhs button.tape
+        working-directory: examples/button
+      
+      - name: Process selector tape
+        run: vhs selector.tape
+        working-directory: examples/selector
+
+      - name: Clean up unnecessary files
+        run: |
+          rm -rf vhs_0.7.2_Linux_x86_64 vhs_0.7.2_Linux_x86_64.tar.gz
+
+      - name: Stage generated GIFs
+        run: git add examples/**/*.gif
+      
+      - name: Commit generated gifs
+        if: success()
+        uses: stefanzweifel/git-auto-commit-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          commit_message: 'chore: Update generated `vhs` gifs'
+          branch: main
+          commit_user_name: vhs-action 📼
+          commit_user_email: actions@github.com
+          commit_author: vhs-action 📼 <actions@github.com>
