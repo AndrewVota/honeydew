@@ -2,8 +2,8 @@ Output button.gif
 
 Set TypingSpeed 75ms
 Set FontSize 22
-Set Width 1300
-Set Height 650
+Set Width 1200
+Set Height 400
 
 Type "go run button.go"
 
@@ -11,25 +11,25 @@ Sleep 250ms
 
 Enter
 
-Sleep 1s
+Sleep 500ms
 
 Enter 2
 
 Tab
 
-Sleep 1s
+Sleep 500ms
 
 Enter 2
 
-Sleep 1s
+Sleep 500ms
 
 Tab
 
-Sleep 1s
+Sleep 500ms
 
 Enter
 
-Sleep 1s
+Sleep 500ms
 
 Hide
 
