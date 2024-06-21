@@ -16,11 +16,12 @@ jobs:
         uses: charmbracelet/vhs-action@v1.2.3
         with:
           path: 'examples/button/button.tape'
-      
-      - name: Process selector tape
-        uses: charmbracelet/vhs-action@v1.2.3
-        with:
           path: 'examples/selector/selector.tape'
+      
+      # - name: Process selector tape
+      #   uses: charmbracelet/vhs-action@v1.2.3
+      #   with:
+      #     path: 'examples/selector/selector.tape'
       
       - name: Commit generated gifs
         if: success()
