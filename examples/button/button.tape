@@ -7,7 +7,7 @@ Set Height 600
 
 Type "go run button.go"
 
-# Sleep 250ms
+Sleep 250ms
 
 Enter
 
