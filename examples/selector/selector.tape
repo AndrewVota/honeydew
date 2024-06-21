@@ -7,8 +7,6 @@ Set Height 400
 
 Type "go run selector.go"
 
-Sleep 250ms
-
 Enter
 
 Sleep 1s

@@ -7,11 +7,9 @@ Set Height 400
 
 Type "go run button.go"
 
-Sleep 250ms
-
 Enter
 
-Sleep 500ms
+Sleep 1s
 
 Enter 2
 
