@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/AndrewVota/honeydew"><img src="https://placehold.jp/250x250.png" alt="Honeydew" width="250"></a>
+  <!-- <a href="https://github.com/AndrewVota/honeydew"><img src="https://placehold.jp/250x250.png" alt="Honeydew" width="250"></a> -->
   <br>
   Honeydew
   <br>
