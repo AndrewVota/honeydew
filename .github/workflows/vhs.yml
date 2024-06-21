@@ -13,12 +13,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Process button tape
-        uses: charmbracelet/vhs-action@v2.1.0
+        uses: charmbracelet/vhs-action@v1.2.3
         with:
           path: 'examples/button/button.tape'
       
       - name: Process selector tape
-        uses: charmbracelet/vhs-action@v2.1.0
+        uses: charmbracelet/vhs-action@v1.2.3
         with:
           path: 'examples/selector/selector.tape'
       
