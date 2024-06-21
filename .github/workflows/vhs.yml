@@ -15,8 +15,9 @@ jobs:
       - name: Process button tape
         uses: charmbracelet/vhs-action@v1.2.3
         with:
-          path: 'examples/button/button.tape'
-          path: 'examples/selector/selector.tape'
+          path: |
+                'examples/button/button.tape'
+                'examples/selector/selector.tape'
       
       # - name: Process selector tape
       #   uses: charmbracelet/vhs-action@v1.2.3
