@@ -15,7 +15,10 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg ttyd
+          sudo apt-get install -y ffmpeg
+          wget https://github.com/tsl0922/ttyd/releases/download/1.7.2/ttyd.x86_64 -O ttyd
+          chmod +x ttyd
+          sudo mv ttyd /usr/local/bin
 
       - name: Install VHS
         run: |
