@@ -27,10 +27,16 @@ jobs:
           sudo mv vhs_0.7.2_Linux_x86_64/vhs /usr/local/bin
 
       - name: Process button tape
-        run: vhs examples/button/button.tape
+        run: vhs button.tape
+        working-directory: examples/button
       
       - name: Process selector tape
-        run: vhs examples/selector/selector.tape
+        run: vhs selector.tape
+        working-directory: examples/selector
+
+      - name: Clean up unnecessary files
+        run: |
+          rm -rf vhs_0.7.2_Linux_x86_64 vhs_0.7.2_Linux_x86_64.tar.gz
 
       - name: Stage generated GIFs
         run: git add **/*.gif
