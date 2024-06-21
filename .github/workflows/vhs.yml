@@ -8,17 +8,23 @@ on:
 jobs:
   vhs:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        tape-path:
-          - 'examples/button/button.tape'
-          - 'examples/selector/selector.tape'
+
     steps:
       - uses: actions/checkout@v4
-      - uses: charmbracelet/vhs-action@v2.1.0
+
+      - name: Process button tape
+        uses: charmbracelet/vhs-action@v2.1.0
         with:
-          path: ${{ matrix.tape-path }}
-      - uses: stefanzweifel/git-auto-commit-action@v4
+          path: 'examples/button/button.tape'
+      
+      - name: Process selector tape
+        uses: charmbracelet/vhs-action@v2.1.0
+        with:
+          path: 'examples/selector/selector.tape'
+      
+      - name: Commit generated gifs
+        if: success()
+        uses: stefanzweifel/git-auto-commit-action@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
