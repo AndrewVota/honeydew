@@ -1,0 +1,1 @@
+![example](./selector.gif)
