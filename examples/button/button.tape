@@ -17,19 +17,19 @@ Enter 2
 
 Tab
 
-Sleep 1s
+Sleep 500ms
 
 Enter 2
 
-Sleep 1s
+Sleep 500ms
 
 Tab
 
-Sleep 1s
+Sleep 500ms
 
 Enter
 
-Sleep 1s
+Sleep 500ms
 
 Hide
 
