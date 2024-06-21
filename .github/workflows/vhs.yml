@@ -12,15 +12,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install VHS
+        run: |
+          wget https://github.com/charmbracelet/vhs/releases/download/v0.7.2/vhs_0.7.2_Linux_x86_64.tar.gz
+          tar -xzf vhs_0.7.2_Linux_x86_64.tar.gz
+          sudo mv vhs /usr/local/bin
+
       - name: Process button tape
-        uses: charmbracelet/vhs-action@v2
-        with:
-          path: 'examples/button/button.tape'
+        run: vhs examples/button/button.tape
       
       - name: Process selector tape
-        uses: charmbracelet/vhs-action@v2
-        with:
-          path: 'examples/selector/selector.tape'
+        run: vhs examples/selector/selector.tape
       
       - name: Commit generated gifs
         if: success()
