@@ -39,7 +39,7 @@ jobs:
           rm -rf vhs_0.7.2_Linux_x86_64 vhs_0.7.2_Linux_x86_64.tar.gz
 
       - name: Stage generated GIFs
-        run: git add examples/**/*.gif
+        run: git add **/*.gif
       
       - name: Commit generated gifs
         if: success()
