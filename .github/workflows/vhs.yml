@@ -31,6 +31,9 @@ jobs:
       
       - name: Process selector tape
         run: vhs examples/selector/selector.tape
+
+      - name: Stage generated GIFs
+        run: git add **/*.gif
       
       - name: Commit generated gifs
         if: success()
